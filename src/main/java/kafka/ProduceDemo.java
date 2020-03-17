@@ -6,6 +6,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
+import static org.apache.kafka.clients.producer.ProducerConfig.*;
+
 /**
  * @author Administrator
  */
@@ -14,12 +16,12 @@ public class ProduceDemo {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", Config.SERVERS);
-        props.put("acks", "all");
-        props.put("retries", 0);
-        props.put("batch.size", 5);
-        props.put("key.serializer", StringSerializer.class.getName());
-        props.put("value.serializer", StringSerializer.class.getName());
+        props.put(BOOTSTRAP_SERVERS_CONFIG, Config.SERVERS);
+        props.put(ACKS_CONFIG, "all");
+        props.put(RETRIES_CONFIG, 0);
+        props.put(BATCH_SIZE_CONFIG, 5);
+        props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producer = new KafkaProducer<>(props);
 
         for (int i = 0; i < 10; i++) {
