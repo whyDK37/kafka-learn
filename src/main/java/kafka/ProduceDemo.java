@@ -11,21 +11,20 @@ import java.util.Properties;
  */
 public class ProduceDemo {
     private static KafkaProducer<String, String> producer;
-    private static String topic = "test";
 
     public static void main(String[] args) {
         Properties props = new Properties();
         props.put("bootstrap.servers", Config.SERVERS);
         props.put("acks", "all");
         props.put("retries", 0);
-        props.put("batch.size", 16384);
+        props.put("batch.size", 5);
         props.put("key.serializer", StringSerializer.class.getName());
         props.put("value.serializer", StringSerializer.class.getName());
-        producer = new KafkaProducer<String, String>(props);
+        producer = new KafkaProducer<>(props);
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             String messageStr = "你好，这是第" + i + "条数据";
-            producer.send(new ProducerRecord<String, String>(topic, "Message", messageStr));
+            producer.send(new ProducerRecord<>(Config.topic, "Message", messageStr));
             System.out.println(messageStr);
         }
 
